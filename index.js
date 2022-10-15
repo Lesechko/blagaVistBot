@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
 });
 
 app.listen(PORT);
-const TG_TOKEN = "5747222529:AAGI7CHGxA485tkEiN376LkFnrqriKMcVqM";
+const TG_TOKEN = process.env.TG_TOKEN;
 
 const bot = new TelegramAPI(TG_TOKEN, { polling: true });
 
