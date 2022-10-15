@@ -1,11 +1,34 @@
 const TelegramAPI = require("node-telegram-bot-api");
 const { COMMAND, helpOptions } = require("./options");
+const express = require("express");
+const app = express();
+const PORT = process.env.PORT || 3000;
 
+const state = {};
+
+app.get("/", (req, res) => {
+  const [ID] = Object.entries(state);
+
+  if (ID) {
+    res.send(
+      `${ID[0]}  ${ID[1]
+        .map((id) => {
+          return `<ul>
+          <li>${id}</li>
+        </ul>`;
+        })
+        .join(" ")}`
+    );
+    return;
+  }
+
+  res.send(`No Messages yet`);
+});
+
+app.listen(PORT);
 const TG_TOKEN = "5747222529:AAGI7CHGxA485tkEiN376LkFnrqriKMcVqM";
 
 const bot = new TelegramAPI(TG_TOKEN, { polling: true });
-
-const state = {}
 
 const startBot = (bot) => {
   bot.setMyCommands([
@@ -23,7 +46,9 @@ const startBot = (bot) => {
     // console.log({ message });
     const text = message.text;
     const chatId = message.chat.id;
+    state[chatId] = state[chatId] ? [...state[chatId], text] : [text];
 
+    console.log({ state });
     switch (message.text) {
       case COMMAND.START:
         await bot.sendSticker(
