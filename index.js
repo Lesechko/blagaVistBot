@@ -1,10 +1,9 @@
 const TelegramAPI = require("node-telegram-bot-api");
 const { COMMAND, helpOptions } = require("./options");
 
-// const TG_TOKEN = "5747222529:AAGI7CHGxA485tkEiN376LkFnrqriKMcVqM";
-const token = process.env.TG_TOKEN
-console.log({token});
-const bot = new TelegramAPI(token, { polling: true });
+const TG_TOKEN = "5747222529:AAGI7CHGxA485tkEiN376LkFnrqriKMcVqM";
+
+const bot = new TelegramAPI(TG_TOKEN, { polling: true });
 
 const state = {}
 
